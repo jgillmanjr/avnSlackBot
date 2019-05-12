@@ -1,4 +1,5 @@
 from addsPy import Client
+from decimal import Decimal
 
 
 def metar(airfield):
@@ -32,9 +33,9 @@ def metar(airfield):
         temp_c = wx['temp_c']
         dewpoint_c = wx['dewpoint_c']
         altim = wx['altim_in_hg']
+        elevation_ft = wx['elevation_m'] * Decimal('3.28084')
 
         # Flight category color
-        color = '#000000'
         if flight_category == 'VFR':
             color = '#00ff00'
         elif flight_category == 'MVFR':
@@ -46,7 +47,6 @@ def metar(airfield):
         # End flight category color
 
         # Wind builder
-        winds = 'Unknown'
         if wind_direction == 0 and wind_speed == 0:
             winds = 'Calm'
         elif wind_direction == 0:
@@ -143,6 +143,11 @@ def metar(airfield):
                         {
                             'title': 'Altimeter',
                             'value': str(round(altim, 2)),
+                            'short': True,
+                        },
+                        {
+                            'title': 'Field Elevation',
+                            'value': str(round(elevation_ft, 0)),
                             'short': True,
                         },
                     ]

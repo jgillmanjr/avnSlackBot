@@ -22,18 +22,19 @@ def msg_handler(**payload):
     user = data['user'] if 'user' in data else None
     text = data['text'] if 'text' in data else None
 
-    print(f'({subtype}) {channel_id} - [{thread_ts}] - {user}: {text}')  # Debugging
+    # print(f'({subtype}) {channel_id} - [{thread_ts}] - {user}: {text}')  # Debugging
 
     if text is not None:
         split_str = text.split()
 
-        if split_str[0] == '!m':
-            post_msg(
-                wclient=web_client,
-                channel=channel_id,
-                thread_ts=None,
-                message_body=metar(split_str[1]),
-            )
+        if split_str[0] == '!m':  # METARs
+            for f in split_str[1:]:
+                post_msg(
+                    wclient=web_client,
+                    channel=channel_id,
+                    thread_ts=thread_ts,
+                    message_body=metar(f),
+                )
 
 
 def build_rtm_client(token):
