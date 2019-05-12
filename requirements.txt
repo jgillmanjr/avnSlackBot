@@ -1,2 +1,2 @@
 addsPy
-slackweb
+slackclient==2.0.1
