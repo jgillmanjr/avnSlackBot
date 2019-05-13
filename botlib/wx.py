@@ -92,11 +92,11 @@ def metar(airfield):
         # End sky builder
 
         metar_msg = {
-            'text': f'METAR for {station_id}',
+            'text': f'*METAR for {station_id}*\n{raw_text}',
             'icon_url': 'https://aviationweather.gov/images/layout/noaa_logo.png',
             'attachments': [
                 {
-                    'pretext': raw_text,
+                    # 'pretext': raw_text,
                     # 'thumb_url': 'https://aviationweather.gov/images/layout/noaa_logo.png',
                     'color': color,
                     'fields': [
