@@ -39,7 +39,7 @@ def metar(airfield):
         if flight_category == 'VFR':
             color = '#00ff00'
         elif flight_category == 'MVFR':
-            color = '#0000ff',
+            color = '#0000ff'
         elif flight_category == 'IFR':
             color = '#ff0000'
         else:
