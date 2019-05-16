@@ -1,6 +1,6 @@
 import slack
 import json
-from .wx import metar
+from .wx import metar, taf
 
 
 # Event Handlers
@@ -34,6 +34,15 @@ def msg_handler(**payload):
                     channel=channel_id,
                     thread_ts=thread_ts,
                     message_body=metar(f),
+                )
+
+        if split_str[0] == '!t':  # TAFs
+            for f in split_str[1:]:
+                post_msg(
+                    wclient=web_client,
+                    channel=channel_id,
+                    thread_ts=thread_ts,
+                    message_body=taf(f),
                 )
 
 
