@@ -1,2 +1,2 @@
 addsPy
-slackclient==2.0.1
+slackclient==2.1.0
