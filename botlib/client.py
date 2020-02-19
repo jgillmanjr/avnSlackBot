@@ -23,27 +23,31 @@ def msg_handler(**payload):
     text = data['text'] if 'text' in data else None
 
     # print(f'({subtype}) {channel_id} - [{thread_ts}] - {user}: {text}')  # Debugging
+    try:
+        if text is not None:
+            split_str = text.split()
 
-    if text is not None:
-        split_str = text.split()
+            if split_str[0] == '!m':  # METARs
+                for f in split_str[1:]:
+                    post_msg(
+                        wclient=web_client,
+                        channel=channel_id,
+                        thread_ts=thread_ts,
+                        message_body=metar(f),
+                    )
 
-        if split_str[0] == '!m':  # METARs
-            for f in split_str[1:]:
-                post_msg(
-                    wclient=web_client,
-                    channel=channel_id,
-                    thread_ts=thread_ts,
-                    message_body=metar(f),
-                )
-
-        if split_str[0] == '!t':  # TAFs
-            for f in split_str[1:]:
-                post_msg(
-                    wclient=web_client,
-                    channel=channel_id,
-                    thread_ts=thread_ts,
-                    message_body=taf(f),
-                )
+            if split_str[0] == '!t':  # TAFs
+                for f in split_str[1:]:
+                    post_msg(
+                        wclient=web_client,
+                        channel=channel_id,
+                        thread_ts=thread_ts,
+                        message_body=taf(f),
+                    )
+    except Exception as e:
+        print('There was an error in processing the message. Here it is.')
+        print(f'({subtype}) {channel_id} - [{thread_ts}] - {user}: {text}')
+        print(e)
 
 
 def build_rtm_client(token):
